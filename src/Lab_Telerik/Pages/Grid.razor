@@ -1,0 +1,67 @@
+﻿@page "/Grid"
+
+@using Telerik.Blazor
+@using Telerik.Blazor.Components
+
+<div class="my-3">
+    <h6><a href="https://docs.telerik.com/blazor-ui/components/grid/overview">官方文件</a></h6>
+    <h6>觸發事件：@currentAction</h6>
+</div>
+
+<TelerikGrid Data="@GridData" PageSize="7"
+             Pageable="true"
+             Sortable="true">
+
+    <GridToolBar>
+        <GridCommandButton Icon="heart-outline" OnClick="Add">新增</GridCommandButton>
+        <span class="k-toolbar-spacer"></span>
+        <GridSearchBox />
+    </GridToolBar>
+
+    <GridColumns>
+        <GridColumn Field="@nameof(Product.Name)" Title="商品" />
+        <GridColumn Field="@nameof(Product.Price)" Title="價格" DisplayFormat="{0:C2}" />
+        <GridColumn Field="@nameof(Product.Date)" Title="日期" DisplayFormat="{0:D}" />
+    </GridColumns>
+</TelerikGrid>
+
+
+
+@code {
+    private List<Product> GridData { get; set; }
+    string currentAction = "";
+
+    protected override void OnInitialized()
+    {
+        GridData = new List<Product>();
+
+        var rnd = new Random();
+
+        for (int i = 1; i <= 30; i++)
+        {
+            GridData.Add(new Product
+            {
+                Id = i,
+                Name = "Product name " + i,
+                Price = (decimal)(rnd.Next(1, 50) * 3.14),
+                Date = DateTime.Now.AddDays(-rnd.Next(1, 365)).AddYears(-rnd.Next(1, 10)).Date,
+            });
+
+        }
+
+        base.OnInitialized();
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public DateTime Date { get; set; }
+    }
+
+    void Add()
+    {
+        currentAction = "新增";
+    }
+}

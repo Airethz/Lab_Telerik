@@ -1,0 +1,93 @@
+﻿@page "/Chart"
+
+@using Telerik.Blazor
+@using Telerik.Blazor.Components
+
+<div class="my-3">
+    <h6><a href="https://docs.telerik.com/blazor-ui/components/chart/overview">官方文件</a></h6>
+</div>
+
+<div class="row">
+    <div class="col-7">
+        <TelerikChart>
+            <ChartSeriesItems>
+                <ChartSeries Type="ChartSeriesType.Line" Name="單一數據" Data="@simpleData">
+                    <ChartSeriesTooltip Visible="true"></ChartSeriesTooltip>
+                </ChartSeries>
+            </ChartSeriesItems>
+
+            <ChartCategoryAxes>
+                <ChartCategoryAxis Categories="@xAxisItems"></ChartCategoryAxis>
+            </ChartCategoryAxes>
+
+            <ChartTitle Text="折線圖"></ChartTitle>
+
+            <ChartLegend Position="Telerik.Blazor.ChartLegendPosition.Bottom">
+            </ChartLegend>
+        </TelerikChart>
+    </div>
+    <div class="col-5">
+        <TelerikChart>
+            <ChartSeriesItems>
+                <ChartSeries Type="ChartSeriesType.Pie" Data="@modelData"
+                             Field="@nameof(MyDataModel.SecondSeriesValue)" CategoryField="@nameof(MyDataModel.ExtraData)">
+                    <ChartSeriesTooltip Visible="true">
+                        <Template>
+                            <TelerikIcon/>
+                            @((context.DataItem as MyDataModel).ExtraData) : @((context.DataItem as MyDataModel).SecondSeriesValue)
+                        </Template>
+                    </ChartSeriesTooltip>
+                    <ChartSeriesLabels Visible="true" >
+                    </ChartSeriesLabels>
+                </ChartSeries>
+            </ChartSeriesItems>
+
+            <ChartTitle Text="圓餅圖"></ChartTitle>
+
+            <ChartLegend Position="ChartLegendPosition.Right">
+            </ChartLegend>
+        </TelerikChart>
+    </div>
+</div>
+
+<div>
+    <TelerikChart>
+        <ChartSeriesItems>
+            <ChartSeries Type="ChartSeriesType.Column" Name="單一數據" Data="@modelData"
+                         Field="@nameof(MyDataModel.SecondSeriesValue)" CategoryField="@nameof(MyDataModel.ExtraData)">
+                <ChartSeriesTooltip Visible="true"></ChartSeriesTooltip>
+            </ChartSeries>
+        </ChartSeriesItems>
+
+        <ChartCategoryAxes>
+            <ChartCategoryAxis Categories="@xAxisItems"></ChartCategoryAxis>
+        </ChartCategoryAxes>
+
+        <ChartTitle Text="長條圖"></ChartTitle>
+
+        <ChartLegend Position="ChartLegendPosition.Right">
+        </ChartLegend>
+    </TelerikChart>
+</div>
+
+
+@code {
+    public class MyDataModel
+    {
+        public int SecondSeriesValue { get; set; }
+        public string ExtraData { get; set; }
+
+    }
+
+    public List<MyDataModel> modelData = new List<MyDataModel>()
+{
+        new MyDataModel() { SecondSeriesValue = 1, ExtraData = "第一季" },
+        new MyDataModel() { SecondSeriesValue = 5, ExtraData = "第二季" },
+        new MyDataModel() { SecondSeriesValue = 3, ExtraData = "第三季" },
+        new MyDataModel() { SecondSeriesValue = 2, ExtraData = "第四季" },
+    };
+
+    public List<object> simpleData = new List<object>() { 10, 2, 7, 5 };
+
+    public string[] xAxisItems = new string[] { "第一季", "第二季", "第三季", "第四季" };
+}

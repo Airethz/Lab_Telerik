@@ -1,0 +1,39 @@
+﻿@using Telerik.Blazor.Components
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Lab_Telerik</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <TelerikIcon Icon="delicious" Class="mr-3" /> 環境設定流程
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Grid">
+                <TelerikIcon Icon="table" Class="mr-3" /> Grid
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Chart">
+                <TelerikIcon Icon="chart-column-clustered" Class="mr-3" /> Chart
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
